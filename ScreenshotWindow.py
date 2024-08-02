@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QVBoxLayout, QDialog
-
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 
 class ScreenshotWindow(QDialog):
     def __init__(self, screenshot, parent=None):
@@ -7,12 +8,15 @@ class ScreenshotWindow(QDialog):
         self.screenshot = screenshot
 
         self.setWindowTitle("Screenshot Preview")
-        self.setGeometry(100, 100, 300, 200)
+        self.setGeometry(100, 100, 800, 600)  # Set initial size to 800x600
+        self.setMinimumSize(400, 300)  # Optional: Set a minimum size
+
         layout = QVBoxLayout()
 
         # Display the screenshot
         self.screenshot_label = QLabel(self)
-        self.screenshot_label.setPixmap(self.screenshot)
+        self.screenshot_label.setAlignment(Qt.AlignCenter)
+        self.screenshot_label.setPixmap(self.screenshot.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
         layout.addWidget(self.screenshot_label)
 
         # Copy to Clipboard button
@@ -21,6 +25,11 @@ class ScreenshotWindow(QDialog):
         layout.addWidget(self.copy_button)
 
         self.setLayout(layout)
+
+    def resizeEvent(self, event):
+        # Scale the screenshot to fit the new window size
+        self.screenshot_label.setPixmap(self.screenshot.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        super(ScreenshotWindow, self).resizeEvent(event)
 
     def copy_to_clipboard(self):
         clipboard = QApplication.clipboard()
