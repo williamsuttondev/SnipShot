@@ -1,6 +1,5 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QVBoxLayout, QDialog
-
+from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QVBoxLayout, QDialog, QMenu, QAction
 
 class ScreenshotWindow(QDialog):
     def __init__(self, screenshot, parent=None):
@@ -36,3 +35,10 @@ class ScreenshotWindow(QDialog):
     def copy_to_clipboard(self):
         clipboard = QApplication.clipboard()
         clipboard.setPixmap(self.screenshot)
+
+    def contextMenuEvent(self, event):
+        context_menu = QMenu(self)
+        copy_action = QAction("Copy", self)
+        copy_action.triggered.connect(self.copy_to_clipboard)
+        context_menu.addAction(copy_action)
+        context_menu.exec_(event.globalPos())
