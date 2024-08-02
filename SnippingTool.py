@@ -14,6 +14,7 @@ def screen_at(point):
 class SnippingTool(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.snipping_window = None
         self.setWindowTitle('Snipping Tool')
         self.setGeometry(100, 100, 300, 100)
         self.setFixedSize(300, 100)  # Set fixed size to make it non-resizable

@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPainter, QColor, QPen, QCursor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from ScreenshotWindow import ScreenshotWindow
 
+
 class SnippingWindow(QMainWindow):
     def __init__(self, screen, parent=None):
         super(SnippingWindow, self).__init__(parent)
@@ -12,7 +13,6 @@ class SnippingWindow(QMainWindow):
         self.parent = parent
         self.setWindowOpacity(0.3)
         self.begin = self.end = None
-        #self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setGeometry(self.screen.geometry())
 
