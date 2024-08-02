@@ -16,7 +16,7 @@ class SnippingWindow(QMainWindow):
 
     def paintEvent(self, event):
         if self.begin and self.end:
-            QRect = QRect(self.begin, self.end)
+            rect = QRect(self.begin, self.end)
             painter = QPainter(self)
             painter.setPen(Qt.NoPen)
             painter.setBrush((0, 0, 0, 100))
