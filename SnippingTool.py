@@ -2,11 +2,13 @@ import sys
 from PyQt5.QtCore import Qt, QRect
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QClipboard
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QWidget, QDialog, QPushButton, QVBoxLayout
+from SnippingWindow import SnippingWindow
 
 
 class SnippingTool(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.snipping_window = None
         self.setWindowTitle('Snipping Tool')
         self.setGeometry(100, 100, 300, 100)
         self.start_button = QPushButton('Capture Screenshot', self)
@@ -16,8 +18,8 @@ class SnippingTool(QMainWindow):
 
     def start_snipping(self):
         self.hide()
-        #self.snipping_window = SnippingWindow(self)
-        #self.snipping_window.showFullScreen()
+        self.snipping_window = SnippingWindow()
+        self.snipping_window.showFullScreen()
 
 
 if __name__ == '__main__':
