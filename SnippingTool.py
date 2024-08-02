@@ -16,6 +16,7 @@ class SnippingTool(QMainWindow):
         super().__init__()
         self.setWindowTitle('Snipping Tool')
         self.setGeometry(100, 100, 300, 100)
+        self.setFixedSize(300, 100)  # Set fixed size to make it non-resizable
         self.start_button = QPushButton('Capture Screenshot', self)
         self.start_button.setGeometry(50, 20, 200, 60)
         self.start_button.clicked.connect(self.start_snipping)
