@@ -11,7 +11,7 @@ class SnippingWindow(QMainWindow):
         self.setWindowOpacity(0.3)
         self.begin = self.end = None
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        #self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setWindowState(Qt.WindowFullScreen)
 
     def paintEvent(self, event):
@@ -19,7 +19,25 @@ class SnippingWindow(QMainWindow):
             rect = QRect(self.begin, self.end)
             painter = QPainter(self)
             painter.setPen(Qt.NoPen)
-            painter.setBrush((0, 0, 0, 100))
+            painter.setBrush(QColor(0, 0, 0, 100))
             painter.drawRect(self.rect())
-            painter.setBrush(QColor(128, 128, 255, 128))
+            painter.setBrush(QColor(255, 0, 0, 255))
             painter.drawRect(rect)
+
+    def mousePressEvent(self, a0):
+        self.begin = a0.pos()
+        self.end = None
+        self.update()
+
+    def mouseMoveEvent(self, a0):
+        self.end = a0.pos()
+        self.update()
+
+    # def mouseReleaseEvent(self, a0):
+    #     x1 = min(self.begin.x(), self.end.x())
+    #     y1 = min(self.begin.y(), self.end.y())
+    #     x2 = max(self.begin.x(), self.end.x())
+    #     y2 = max(self.begin.y(), self.end.y())
+    #     self.capture_screen(x1, y2, x2, y2)
+    #     self.close()
+    #     self.parent.show()
