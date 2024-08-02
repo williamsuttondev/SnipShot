@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBo
 class SnippingWindow(QMainWindow):
     def __init__(self, parent=None):
         super(SnippingWindow, self).__init__()
+        self.show_screenshot_window = None
         self.parent = parent
         self.setWindowOpacity(0.3)
         self.begin = self.end = None
@@ -33,11 +34,21 @@ class SnippingWindow(QMainWindow):
         self.end = a0.pos()
         self.update()
 
-    # def mouseReleaseEvent(self, a0):
-    #     x1 = min(self.begin.x(), self.end.x())
-    #     y1 = min(self.begin.y(), self.end.y())
-    #     x2 = max(self.begin.x(), self.end.x())
-    #     y2 = max(self.begin.y(), self.end.y())
-    #     self.capture_screen(x1, y2, x2, y2)
-    #     self.close()
-    #     self.parent.show()
+    def mouseReleaseEvent(self, a0):
+        x1 = min(self.begin.x(), self.end.x())
+        y1 = min(self.begin.y(), self.end.y())
+        x2 = max(self.begin.x(), self.end.x())
+        y2 = max(self.begin.y(), self.end.y())
+        self.capture_screen(x1, y2, x2, y2)
+        self.close()
+        self.parent.show()
+
+    def capture_screen(self, x1, y1, x2, y2):
+        screen = QApplication.primaryScreen()
+        screenshot = screen.grabWindow(0, x1, y1, x2 - x1, y2 - y1)
+        # self.show_screenshot_window(screenshot)
+
+    def show_screenshot_window(self, screenshot):
+        # self.show_screenshot_window = ScreenshotWindow(screenshot)
+        # self.show_screenshot_window().show()
+        
