@@ -18,7 +18,7 @@ class SnippingTool(QMainWindow):
 
     def start_snipping(self):
         self.hide()
-        self.snipping_window = SnippingWindow()
+        self.snipping_window = SnippingWindow(self)
         self.snipping_window.showFullScreen()
 
 
