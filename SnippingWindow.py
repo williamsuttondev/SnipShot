@@ -1,7 +1,7 @@
 import time
 
 from PyQt5.QtCore import Qt, QRect, QPoint
-from PyQt5.QtGui import QPainter, QColor
+from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from ScreenshotWindow import ScreenshotWindow
@@ -20,13 +20,20 @@ class SnippingWindow(QMainWindow):
         self.setGeometry(self.screen.geometry())
 
     def paintEvent(self, event):
+        painter = QPainter(self)
+
+        # Draw the red outline around the entire window
+        pen = QPen(QColor(255, 0, 0), 3)  # Red color with 3px width
+        painter.setPen(pen)
+        painter.drawRect(self.rect().adjusted(1, 1, -1, -1))
+
+        # If a region is being selected, draw the selection rectangle
         if self.begin and self.end:
             rect = QRect(self.begin, self.end)
-            painter = QPainter(self)
             painter.setPen(Qt.NoPen)
             painter.setBrush(QColor(0, 0, 0, 100))
             painter.drawRect(self.rect())
-            painter.setBrush(QColor(255, 0, 0, 255))
+            painter.setBrush(QColor(255, 0, 0, 100))
             painter.drawRect(rect)
 
     def mousePressEvent(self, event):
@@ -39,6 +46,8 @@ class SnippingWindow(QMainWindow):
         self.update()
 
     def mouseReleaseEvent(self, event):
+        self.end = event.pos()
+        self.update()  # Trigger a final paint event
         x1 = min(self.begin.x(), self.end.x())
         y1 = min(self.begin.y(), self.end.y())
         x2 = max(self.begin.x(), self.end.x())
