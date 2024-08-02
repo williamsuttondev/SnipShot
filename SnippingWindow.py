@@ -1,11 +1,8 @@
 import time
-
 from PyQt5.QtCore import Qt, QRect, QPoint
-from PyQt5.QtGui import QPainter, QColor, QPen
+from PyQt5.QtGui import QPainter, QColor, QPen, QCursor
 from PyQt5.QtWidgets import QApplication, QMainWindow
-
 from ScreenshotWindow import ScreenshotWindow
-
 
 class SnippingWindow(QMainWindow):
     def __init__(self, screen, parent=None):
@@ -48,11 +45,18 @@ class SnippingWindow(QMainWindow):
         self.update()
 
     def mouseMoveEvent(self, event):
-        self.end = event.pos()
+        # Constrain the cursor position within the screen's geometry
+        x = max(self.screen.geometry().left(), min(event.globalX(), self.screen.geometry().right() - 1))
+        y = max(self.screen.geometry().top(), min(event.globalY(), self.screen.geometry().bottom() - 1))
+        QCursor.setPos(x, y)
+        self.end = self.mapFromGlobal(QPoint(x, y))
         self.update()
 
     def mouseReleaseEvent(self, event):
-        self.end = event.pos()
+        # Constrain the final position
+        x = max(self.screen.geometry().left(), min(event.globalX(), self.screen.geometry().right() - 1))
+        y = max(self.screen.geometry().top(), min(event.globalY(), self.screen.geometry().bottom() - 1))
+        self.end = self.mapFromGlobal(QPoint(x, y))
         self.update()  # Trigger a final paint event
         x1 = min(self.begin.x(), self.end.x())
         y1 = min(self.begin.y(), self.end.y())
