@@ -36,6 +36,12 @@ class SnippingWindow(QMainWindow):
             painter.setBrush(QColor(255, 0, 0, 100))
             painter.drawRect(rect)
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.close()
+            if self.parent:
+                self.parent.show()
+
     def mousePressEvent(self, event):
         self.begin = event.pos()
         self.end = None
