@@ -1,6 +1,4 @@
-from PyQt5.QtCore import Qt, QRect
-from PyQt5.QtGui import QPixmap, QPainter, QColor, QClipboard
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QDialog
+from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QVBoxLayout, QDialog
 
 
 class ScreenshotWindow(QDialog):

@@ -1,7 +1,11 @@
+import time
+
 from PyQt5.QtCore import Qt, QRect, QPoint
-from PyQt5.QtGui import QPixmap, QPainter, QColor
+from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
+
 from ScreenshotWindow import ScreenshotWindow
+
 
 class SnippingWindow(QMainWindow):
     def __init__(self, screen, parent=None):
@@ -45,6 +49,9 @@ class SnippingWindow(QMainWindow):
             self.parent.show()
 
     def capture_screen(self, x1, y1, x2, y2):
+        self.hide()
+        QApplication.processEvents()
+        time.sleep(0.1)
         # Use the coordinates directly without additional offset adjustments
         global_x1 = x1
         global_y1 = y1

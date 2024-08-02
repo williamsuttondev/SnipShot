@@ -1,12 +1,20 @@
 import sys
-from PyQt5.QtCore import Qt, QRect
-from PyQt5.QtGui import QPixmap, QPainter, QColor, QClipboard
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QWidget, QDialog, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from SnippingWindow import SnippingWindow
+
+
+def screen_at(point):
+    """Returns the screen at the given point"""
+    for screen in QApplication.screens():
+        if screen.geometry().contains(point):
+            return screen
+    return QApplication.primaryScreen()
+
 
 class SnippingTool(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.snipping_window = None
         self.setWindowTitle('Snipping Tool')
         self.setGeometry(100, 100, 300, 100)
         self.start_button = QPushButton('Capture Screenshot', self)
@@ -16,16 +24,10 @@ class SnippingTool(QMainWindow):
 
     def start_snipping(self):
         self.hide()
-        screen = self.screen_at(self.geometry().center())
+        screen = screen_at(self.geometry().center())
         self.snipping_window = SnippingWindow(screen, self)
         self.snipping_window.showFullScreen()
 
-    def screen_at(self, point):
-        """Returns the screen at the given point"""
-        for screen in QApplication.screens():
-            if screen.geometry().contains(point):
-                return screen
-        return QApplication.primaryScreen()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
