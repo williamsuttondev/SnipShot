@@ -24,7 +24,7 @@ Check the `dist` folder for the release, or download the one I generated from th
 
 ## How to Run
 
-1. Navigate to the `dist` folder containing the executable.
+1. Navigate to the `dist` folder containing the executable. (Or your downloads folder)
 2. Make the file executable:
 
    ```bash
@@ -36,6 +36,8 @@ Check the `dist` folder for the release, or download the one I generated from th
    ```bash
    ./SnippingTool
    ```
+
+Of course you can add it to your bashrc with an alias!
 
 ## Issues and Bugs
 
